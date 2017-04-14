@@ -1,0 +1,31 @@
+plugins {
+    id "java"
+    id "idea"
+    id "jaci.openrio.gradle.GradleRIO" version "2017.1.5"
+}
+
+frc {
+    team = "3151"
+    robotClass = "org.usfirst.frc.team3151.EncoderExperimentation"
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    compile wpilib()
+    compile talonSrx()
+    compile navx()
+    compile 'Pathfinder-Java'
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest {
+        attributes "Main-Class": "edu.wpi.first.wpilibj.RobotBase"
+        attributes "Robot-Class": frc.robotClass
+    }
+}
